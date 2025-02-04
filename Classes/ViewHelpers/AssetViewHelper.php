@@ -70,8 +70,8 @@ class AssetViewHelper extends AbstractViewHelper
             $pageRenderer->addJsFile($domainWithPort . '/' . $srcPath . '/' . $entry, 'module');
         }
 
-        if (!$viteDevServerRunning and $outPath and $srcPath) {
-            $files = Utility::viteManifestFile($extension, $extensionPath, $outPath, $srcPath, $entry);
+        if (!$viteDevServerRunning and $outPath) {
+            $files = Utility::viteManifestFile($settings, $extension, $extensionPath, $outPath, $srcPath, $entry);
             foreach ($files as $file) {
                 if (preg_match('/\.js$/', $file)) {
                     $pageRenderer->addJsFooterFile($file);

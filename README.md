@@ -124,6 +124,7 @@ plugin.tx_typo3vite.settings.extension_name {
     uri = /@vite/client           # default uri for vite client
     timeout = 1.0                 # timeout for dev server check
     verify = false                # ssl certificate verification
+    manifestFile = manifest.json  # default manifest path/filename
 }
 ```
 

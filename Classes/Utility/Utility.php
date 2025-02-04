@@ -27,9 +27,9 @@ class Utility
         return preg_replace('/\/?(\'|")\/?/m', '', $matches[0][1]);
     }
 
-    public static function viteManifestExists(string $extensionPath, string $outPath): bool
+    public static function viteManifestExists(array $settings, string $extensionPath, string $outPath): bool
     {
-        return file_exists($extensionPath . $outPath . '/manifest.json');
+        return file_exists($extensionPath . $outPath . '/' . self::manifestFilename($settings));
     }
 
     /**
@@ -40,13 +40,12 @@ class Utility
      * @param string $entry
      * @return array
      */
-    public static function viteManifestFile(string $extension, string $extensionPath, string $outPath, string $srcPath, string $entry): array
+    public static function viteManifestFile(array $settings, string $extension, string $extensionPath, string $outPath, string $srcPath, string $entry): array
     {
-        if (!self::viteManifestExists($extensionPath, $outPath)) {
+        if (!self::viteManifestExists($settings, $extensionPath, $outPath)) {
             return [];
         }
-
-        $manifestPath = $extensionPath . $outPath . '/manifest.json';
+        $manifestPath = $extensionPath . $outPath . '/' . self::manifestFilename($settings);
         $outputDir = 'EXT:' . $extension . '/' . $outPath . '/';
 
         $assets = [];
@@ -106,5 +105,14 @@ class Utility
         }
 
         return true;
+    }
+
+    /**
+     * @param array $settings
+     * @return string
+     */
+    private static function manifestFilename(array $settings): string
+    {
+        return $settings['manifestFile'] ?? 'manifest.json';
     }
 }
