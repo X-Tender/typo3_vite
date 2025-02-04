@@ -67,7 +67,8 @@ class AssetViewHelper extends AbstractViewHelper
 
         if ($viteDevServerRunning) {
             $pageRenderer->addJsFile($domainWithPort . '/@vite/client', 'module');
-            $pageRenderer->addJsFile($domainWithPort . '/' . $srcPath . '/' . $entry, 'module');
+            $entryPath = $srcPath ? $srcPath . '/' . $entry : $entry;
+            $pageRenderer->addJsFile($domainWithPort . '/' . $entryPath, 'module');
         }
 
         if (!$viteDevServerRunning and $outPath) {

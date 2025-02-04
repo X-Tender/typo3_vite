@@ -50,7 +50,8 @@ class Utility
 
         $assets = [];
         foreach (json_decode(file_get_contents($manifestPath)) as $item) {
-            if ($item->src != $srcPath . '/' . $entry) {
+            $targetPath = $srcPath ? $srcPath . '/' . $entry : $entry;
+            if ($item->src != $targetPath) {
                 continue;
             }
 

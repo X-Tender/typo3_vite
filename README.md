@@ -92,11 +92,31 @@ plugin.tx_typo3vite.settings.extension_name {
 
 Add the viewhelpers in your page template to use your bundled files. The entry is the filename of the input files from the `vite.config.js`.
 
-```xml
+```html
+<html
+    data-namespace-typo3-fluid="true"
+    xmlns:vite="http://typo3.org/ns/Crazy252/Typo3Vite/ViewHelpers"
+>
+<!--or-->
 {namespace vite=Crazy252\Typo3Vite\ViewHelpers}
 
 <vite:asset extension="extension_name" entry="main.js" />
 ```
+
+Set `src =` in TypoScript config to allow project root relative entry paths
+```html
+<html
+    data-namespace-typo3-fluid="true"
+    xmlns:vite="http://typo3.org/ns/Crazy252/Typo3Vite/ViewHelpers"
+>
+<!--or-->
+{namespace vite=Crazy252\Typo3Vite\ViewHelpers}
+
+<vite:asset extension="extension_name" entry="src/js/main.js" />
+<vite:asset extension="extension_name" entry="ContentBlocks/ContentElements/hero/source/Hero.js" />
+```
+
+
 
 And now it's done. Start the dev server in your extension folder via `yarn dev` or other javascript package managers.
 
@@ -118,6 +138,7 @@ If you want to change the domain, url, timeout and other settings you can change
 plugin.tx_typo3vite.settings.extension_name {
     out = null                    # path to the output folder
     src = null                    # path to the src folder
+    # set src to empty (src = ) to use project root relative paths
 
     domain = https://127.0.0.1    # default domain of vite server
     port = 3000                   # default port of vite server
