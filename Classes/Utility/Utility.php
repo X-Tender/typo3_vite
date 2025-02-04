@@ -78,7 +78,11 @@ class Utility
             $domain = $settings['domain'];
         }
 
-        return preg_replace('/\/+$/m', '', $domain) . ':' . ($settings['port'] ?? 3000);
+        $port = $settings['port'] ?? 3000;
+        $url = preg_replace('/\/+$/m', '', $domain);
+        if ($port) $url .= ':' . $port;
+
+        return $url;
     }
 
     /**
@@ -88,7 +92,7 @@ class Utility
     public static function viteDevServerRunning(array $settings): bool
     {
         $requestFactory = GeneralUtility::makeInstance(RequestFactory::class);
-        
+
         $domain = $settings['domain'] ?? 'https://127.0.0.1';
         $port = $settings['port'] ?? 3000;
         $uri = $settings['uri'] ?? '/@vite/client';
@@ -96,8 +100,12 @@ class Utility
         $timeout = $settings['timeout'] ?? 1.0;
         $verify = $settings['verify'] ?? false;
 
+        $url = $domain;
+        if ($port) $url .= ':' . $port;
+        $url .= $uri;
+
         try {
-            $requestFactory->request($domain . ':' . $port . $uri, 'GET', [
+            $requestFactory->request($url, 'GET', [
                 'timeout' => $timeout,
                 'verify' => $verify,
             ]);

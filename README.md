@@ -142,6 +142,8 @@ plugin.tx_typo3vite.settings.extension_name {
 
     domain = https://127.0.0.1    # default domain of vite server
     port = 3000                   # default port of vite server
+    # set port to empty (port = ) to avoid using port
+
     uri = /@vite/client           # default uri for vite client
     timeout = 1.0                 # timeout for dev server check
     verify = false                # ssl certificate verification
