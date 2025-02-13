@@ -3,6 +3,7 @@
 namespace Crazy252\Typo3Vite\ViewHelpers;
 
 use Crazy252\Typo3Vite\Utility\Utility;
+use TYPO3\CMS\Core\Page\AssetCollector;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
@@ -50,8 +51,8 @@ window.$RefreshReg$ = () => {}
 window.$RefreshSig$ = () => (type) => type
 window.__vite_plugin_react_preamble_installed__ = true';
 
-            $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-            $pageRenderer->addJsInlineCode('typo3_vite:reactRefresh', $code, false, true);
+            $assetCollector = GeneralUtility::makeInstance(AssetCollector::class);
+            $assetCollector->addInlineJavaScript('typo3_vite:reactRefresh', $code, ['type' => 'module'], ['priority' => true]);
         }
     }
 }

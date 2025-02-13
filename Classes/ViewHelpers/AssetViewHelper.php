@@ -3,6 +3,7 @@
 namespace Crazy252\Typo3Vite\ViewHelpers;
 
 use Crazy252\Typo3Vite\Utility\Utility;
+use TYPO3\CMS\Core\Page\AssetCollector;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -66,16 +67,16 @@ class AssetViewHelper extends AbstractViewHelper
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
 
         if ($viteDevServerRunning) {
-            $pageRenderer->addJsFile($domainWithPort . '/@vite/client', 'module');
+            $pageRenderer->addHeaderData('<script type="module" src="' . $domainWithPort . '/@vite/client' . '"></script>');
             $entryPath = $srcPath ? $srcPath . '/' . $entry : $entry;
-            $pageRenderer->addJsFile($domainWithPort . '/' . $entryPath, 'module');
+            $pageRenderer->addHeaderData('<script type="module" src="' . $domainWithPort . '/' . $entryPath . '"></script>');
         }
 
         if (!$viteDevServerRunning and $outPath) {
             $files = Utility::viteManifestFile($settings, $extension, $extensionPath, $outPath, $srcPath, $entry);
             foreach ($files as $file) {
                 if (preg_match('/\.js$/', $file)) {
-                    $pageRenderer->addJsFooterFile($file);
+                    $pageRenderer->addJsFooterFile($file, 'module');
                 }
                 if (preg_match('/\.css$/', $file)) {
                     $pageRenderer->addCssFile($file);
