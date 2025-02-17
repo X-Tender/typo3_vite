@@ -51,13 +51,10 @@ class Utility
         $assets = [];
         foreach (json_decode(file_get_contents($manifestPath)) as $item) {
             $targetPath = $srcPath ? $srcPath . '/' . $entry : $entry;
-            if ($item->src != $targetPath) {
+            if (($item->src ?? '') != $targetPath) {
                 continue;
             }
 
-            foreach ($item->imports ?? [] as $file) {
-                $assets[] = $outputDir . $file;
-            }
             foreach ($item->css ?? [] as $file) {
                 $assets[] = $outputDir . $file;
             }
