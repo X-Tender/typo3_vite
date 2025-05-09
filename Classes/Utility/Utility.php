@@ -49,9 +49,9 @@ class Utility
         $outputDir = 'EXT:' . $extension . '/' . $outPath . '/';
 
         $assets = [];
+        $targetPath = $srcPath ? $srcPath . '/' . $entry : $entry;
         foreach (json_decode(file_get_contents($manifestPath)) as $item) {
-            $targetPath = $srcPath ? $srcPath . '/' . $entry : $entry;
-            if (($item->src ?? '') != $targetPath) {
+            if ((isset($item->src) ? $item->src : '') != $targetPath) {
                 continue;
             }
 
